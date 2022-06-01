@@ -4,13 +4,15 @@ namespace EpressPublishingHouse
 {
     public class Contract
     {
+        private readonly uint ContractId;
         private readonly Author author;
         private bool ContractType;
 
-        public Contract(Author author, bool ContractType)
+        public Contract(Author author, bool ContractType, uint ContractId)
         {
             this.author = author;
             this.ContractType = ContractType;
+            this.ContractId = ContractId;
         }
 
         public Contract(Contract contract)
@@ -24,11 +26,21 @@ namespace EpressPublishingHouse
             return author;
         }
 
-        public string GetContractType()
+        public bool GetContractType()
+        {
+            return ContractType;
+        }
+
+        public string ContractTypeToString()
         {
             if (!ContractType)
                 return "Contract of employment";
             else return "Contract of commission";
+        }
+
+        public uint GetContractId()
+        {
+            return ContractId;
         }
 
         public void ChangeContractType()

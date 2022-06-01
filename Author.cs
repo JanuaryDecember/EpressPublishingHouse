@@ -7,7 +7,7 @@ namespace EpressPublishingHouse
 	{
 		private readonly string Name, Surname;
 		private readonly ushort id;
-		private List<PrintOrder> orders;
+		private List<AbstractPrintOrder> orders;
 
 		public Author(string Name, string Surname, ushort id)
 		{
@@ -21,7 +21,7 @@ namespace EpressPublishingHouse
 			this.Name = author.Name;
 			this.Surname= author.Surname;
 			this.id = author.id;
-			this.orders = new List<PrintOrder>(author.orders);
+			this.orders = new List<AbstractPrintOrder>(author.orders);
         }
 
 		public ushort GetId()
@@ -59,6 +59,11 @@ namespace EpressPublishingHouse
         public override int GetHashCode()
         {
             return base.GetHashCode();
+        }
+
+        public override string ToString()
+        {
+            return "Name: " + Name + "\nSurname" + Surname + ;
         }
 
     }
