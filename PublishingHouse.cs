@@ -39,5 +39,9 @@ namespace EpressPublishingHouse
             }
             return 0;
         }
+        public void Print(PrintOrder order)
+        {
+            //to ogarnę
+        }
     }
 }
