@@ -4,24 +4,21 @@ namespace EpressPublishingHouse
 {
     public class Book : AbstractCreation
     {
-        private readonly uint ISBN;
+        private readonly string ISBN;
         private readonly string Genre;
-        public Book(Author author, string Title, float Price, uint Quantity, uint ISBN, string Genre) : base(author, Title, Price, Quantity)
+
+        public Book() : base()
+        {
+            this.ISBN = "0000000000000";
+            this.Genre = "Ksiazka";
+        }
+        public Book(Author author, string Title, float Price, string ISBN, string Genre) : base(author, Title, Price)
         {
             this.ISBN = ISBN;
             this.Genre = Genre;
         }
-
-        public uint GetISBN()
-        {
-            return this.ISBN;
-        }
-
-        public string GetGenre()
-        {
-            return this.Genre;
-        }
-
+        public string GetISBN() { return this.ISBN; }
+        public string GetGenre() { return this.Genre; } 
         public override bool Equals(object? obj)
         {
             if (obj != null)
@@ -42,11 +39,5 @@ namespace EpressPublishingHouse
             }
             else return false;
         }
-
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
-
     }
 }

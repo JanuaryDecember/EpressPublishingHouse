@@ -7,13 +7,14 @@ namespace EpressPublishingHouse
 	{
 		private readonly string Name, Surname;
 		private readonly ushort id;
+		private static ushort lastId = 0;
 		private List<AbstractPrintOrder> orders;
 
-		public Author(string Name, string Surname, ushort id)
+		public Author(string Name, string Surname)
 		{
 			this.Name = Name;
 			this.Surname = Surname;
-			this.id = id;
+			this.id = ++lastId;
 		}
 
 		public Author(Author author)
@@ -23,22 +24,9 @@ namespace EpressPublishingHouse
 			this.id = author.id;
 			this.orders = new List<AbstractPrintOrder>(author.orders);
         }
-
-		public ushort GetId()
-		{
-			return id;
-		}
-
-		public string GetName()
-		{
-			return Name;
-		}
-
-		public string GetSurname()
-		{
-			return Surname;
-		}
-
+		public ushort GetId() { return id; }
+		public string GetName() { return Name; }
+		public string GetSurname() { return Surname; } 
         public override bool Equals(object? obj)
         {
 			if (obj != null)
@@ -61,10 +49,6 @@ namespace EpressPublishingHouse
             return base.GetHashCode();
         }
 
-        public override string ToString()
-        {
-            return "Name: " + Name + "\nSurname" + Surname + ;
-        }
-
+        public override string ToString() { return "Name: " + Name + "\nSurname" + Surname + ; }
     }
 }
