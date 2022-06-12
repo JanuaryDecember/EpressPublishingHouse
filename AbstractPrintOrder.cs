@@ -5,7 +5,7 @@ namespace EpressPublishingHouse
     public class PrintOrder
     {
         private uint id;                    //id zlecenia
-        private static string lastId = 0;   //id poprzedniego zlecenia (wspólne dla wszystkich obiektów)
+        private static uint lastId = 0;   //id poprzedniego zlecenia (wspólne dla wszystkich obiektów)
         private string printOrderType;      //jaki typ będzie drukowany (książka czy czasopismo)
         private AbstractCreation creation;  //co dokładnie będzie drukowane
         private uint amount;
@@ -22,11 +22,11 @@ namespace EpressPublishingHouse
             this.creation = creation;
             this.amount = amount;
             if (creation is Book) printOrderType = "Ks";    //książka
-            else printOrderType = "Cz"                      //czasopismo
+            else printOrderType = "Cz";                    //czasopismo
         }
         public uint GetId() { return id; }
-        public bool GetPrintOrderType() { return PrintOrderType; }
-        public Author getPrintOrderType() { return printOrderType; }
+        public string getPrintOrderType() { return printOrderType; }
+        public AbstractCreation getCreation() { return creation; }
         public void finishOrder()
         {
 
