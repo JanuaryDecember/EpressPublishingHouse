@@ -2,32 +2,34 @@
 
 namespace EpressPublishingHouse
 {
-    public abstract class AbstractPrintOrder
+    public class PrintOrder
     {
-        protected uint id;
-        protected bool PrintOrderType;
-        protected Author author;
-        public AbstractPrintOrder(uint id, bool printOrderType, Author author, string Title)
+        private uint id;                    //id zlecenia
+        private static string lastId = 0;   //id poprzedniego zlecenia (wspólne dla wszystkich obiektów)
+        private string printOrderType;      //jaki typ będzie drukowany (książka czy czasopismo)
+        private AbstractCreation creation;  //co dokładnie będzie drukowane
+        private uint amount;
+        public PrintOrder()
         {
-            this.id = id;
-            this.PrintOrderType = printOrderType;
-            this.author = author;
+            this.id = ++lastId;
+            this.creation = new Book();
+            this.amount = 0;
+            printOrderType = "Ks";
         }
+        public PrintOrder(AbstractCreation creation, uint amount)
+        {
+            this.id = ++lastId;
+            this.creation = creation;
+            this.amount = amount;
+            if (creation is Book) printOrderType = "Ks";    //książka
+            else printOrderType = "Cz"                      //czasopismo
+        }
+        public uint GetId() { return id; }
+        public bool GetPrintOrderType() { return PrintOrderType; }
+        public Author getPrintOrderType() { return printOrderType; }
+        public void finishOrder()
+        {
 
-        public uint GetId()
-        {
-            return id;
         }
-
-        public bool GetPrintOrderType()
-        {
-            return PrintOrderType;
-        }
-
-        public Author GetAuthor()
-        {
-            return author;
-        }
-        
     }
 }
