@@ -10,8 +10,8 @@ namespace EpressPublishingHouse
         protected uint Quantity = 0;
         protected AbstractCreation()
         {
-            author = new Author("Jan", "Kowalski");
-            Title = "Bez nazwy";
+            author = new Author("Null", "Null");
+            Title = "Null";
             Price = 0;
         }
         protected AbstractCreation(Author author, string Title, float Price)
@@ -20,12 +20,12 @@ namespace EpressPublishingHouse
             this.Title = Title;
             this.Price = Price;
         }
-        public Author GetAuthor() { return author; }
-        public string GetTitle() { return Title; }
-        public float GetPrice() { return Price; }
-        public uint GetQuantity() { return Quantity; }
-        public void GetPrice(float Price) { this.Price = Price; }
-        public void MenageQuantity(uint Quantity, bool Option)
+        public virtual Author GetAuthor() { return author; }
+        public virtual string GetTitle() { return Title; }
+        public virtual float GetPrice() { return Price; }
+        public virtual uint GetQuantity() { return Quantity; }
+        public virtual void GetPrice(float Price) { this.Price = Price; }
+        public virtual void MenageQuantity(uint Quantity, bool Option)
         {
             if (Option)
             {

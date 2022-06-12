@@ -4,14 +4,17 @@ namespace EpressPublishingHouse
 {
     public class PublishingHouse
     {
-        private string id { get; set; }
-        private int jd;
+        private List<PrintingHouse> printingHouseList;
+        private List<Author> authors;
+        private List<Contract> contracts;
+        private Warehouse warehouse;
 
-        public PublishingHouse(int jd)
+        public PublishingHouse(Warehouse warehouse)
         {
-            this.jd = jd;
-            id = "213334jdk";
+            this.printingHouseList = new List<PrintingHouse>();
+            this.authors = new List<Author>();
+            this.contracts = new List<Contract>();
+            this.warehouse = warehouse;
         }
-
     }
 }

@@ -6,13 +6,13 @@ namespace EpressPublishingHouse
     {
         private readonly string ReleaseNumber;
         private readonly string Kind;
-        public Magazine(Author author, string Title, float Price, uint Quantity, string ReleaseNumber, string Kind) : base(author, Title, Price, Quantity)
+        public Magazine(Author author, string Title, float Price, string ReleaseNumber, string Kind) : base(author, Title, Price)
         {
             this.ReleaseNumber = ReleaseNumber;
             this.Kind = Kind;
         }
 
-        public Magazine(Magazine magazine) : base(new Author(magazine.author), magazine.Title, magazine.Price, magazine.Quantity)
+        public Magazine(Magazine magazine) : base(new Author(magazine.author), magazine.Title, magazine.Price)
         {
             this.ReleaseNumber = magazine.ReleaseNumber;
             this.Kind = magazine.Kind;
