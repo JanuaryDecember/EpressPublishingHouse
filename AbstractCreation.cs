@@ -24,7 +24,7 @@ namespace EpressPublishingHouse
         public virtual string GetTitle() { return Title; }
         public virtual float GetPrice() { return Price; }
         public virtual uint GetQuantity() { return Quantity; }
-        public virtual void GetPrice(float Price) { this.Price = Price; }
+        public virtual void SetPrice(float Price) { this.Price = Price; }
         public virtual void MenageQuantity(uint Quantity, bool Option)
         {
             if (Option)
@@ -37,7 +37,6 @@ namespace EpressPublishingHouse
                 Console.WriteLine("There are not enough books");
             }
         }
-
     }
 }
 

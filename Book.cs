@@ -9,8 +9,8 @@ namespace EpressPublishingHouse
 
         public Book() : base()
         {
-            this.ISBN = "Null";
-            this.Genre = "Null";
+            ISBN = "Null";
+            Genre = "Null";
         }
         public Book(Author author, string Title, float Price, string ISBN, string Genre) : base(author, Title, Price)
         {
@@ -39,7 +39,6 @@ namespace EpressPublishingHouse
             }
             else return false;
         }
-
         public override int GetHashCode()
         {
             return base.GetHashCode();

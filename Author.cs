@@ -9,20 +9,25 @@ namespace EpressPublishingHouse
 		private readonly ushort id;
 		private static ushort lastId = 0;
 		private readonly List<AbstractCreation> orders;
-
+		public Author()
+		{
+			name = "Null";
+			surname = "Null";
+			id = ++lastId;
+			orders = new List<AbstractCreation>();
+		}
 		public Author(string name, string surname)
 		{
 			this.name = name;
 			this.surname = surname;
-			this.id = ++lastId;
+			id = ++lastId;
 			orders = new List<AbstractCreation>();
 		}
-
 		public Author(Author author)
 		{
-			this.name = author.name;
-			this.surname = author.surname;
-			this.id = author.id;
+			name = author.name;
+			surname = author.surname;
+			id = author.id;
 			orders = new List<AbstractCreation>(author.orders);
 		}
 		public ushort GetId() { return id; }
@@ -44,15 +49,13 @@ namespace EpressPublishingHouse
 			}
 			else return false;
 		}
-
-		public override int GetHashCode()
-		{
-			return base.GetHashCode();
-		}
-
-		public override string ToString()
-		{
-			return "Name: " + name + "\nSurname: " + surname;
-		}
+		public override int GetHashCode() { return base.GetHashCode(); } 
+		public override string ToString() { return "Name: " + name + "\nSurname: " + surname; }
+		public void NewOrder(AbstractCreation creation) { orders.Add(creation); }
+		public void ShowOrders()
+        {
+			//do napisania
+        }
+		public void FinishOrder() { } //Napisać
 	}
 }

@@ -9,44 +9,29 @@ namespace EpressPublishingHouse
         private readonly string printOrderType = "null";      //jaki typ będzie drukowany (książka czy czasopismo)
         private readonly AbstractCreation creation;  //co dokładnie będzie drukowane
         private uint amount;
-        
         public PrintOrder()
         {
-            this.id = ++lastId;
-            this.creation = new Book();
-            this.amount = 0;
+            id = ++lastId;
+            creation = new Book();
+            amount = 0;
             printOrderType = "Bk";
         }
-        
         public PrintOrder(AbstractCreation creation, uint amount)
         {
             this.id = ++lastId;
             this.creation = creation;
             this.amount = amount;
+            if (creation is Book && ((Book)creation).GetGenre() == "Album") printOrderType = "Al";    //album
             if (creation is Book) printOrderType = "Bk";    //książka
-            else if (creation is Magazine) printOrderType = "Mg";                    //czasopismo
+            else if (creation is Magazine) printOrderType = "Mg";     //czasopismo
         }
-        
         public uint GetId() { return id; }
-        
         public string GetPrintOrderType() { return printOrderType; }
-        
-        public AbstractCreation GetCreation() 
+        public AbstractCreation GetCreation() { return creation; }
+        public uint GetAmount() { return amount; }
+        public void Finish()
         {
-            if (printOrderType.Equals("Bk"))
-                return (Book)creation;
-            else
-                return (Magazine)creation;
-        }
-
-        public void AddAmount(uint amount)
-        {
-            this.amount += amount;
-        }
-
-        public uint GetAmount()
-        {
-            return amount;
+            //to zrobię
         }
     }
 }
