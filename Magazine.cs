@@ -6,6 +6,13 @@ namespace EpressPublishingHouse
     {
         private readonly string ReleaseNumber;
         private readonly string Kind;
+
+        public Magazine() : base()
+        {
+            ReleaseNumber = "Null";
+            Kind = "Null";
+        }
+
         public Magazine(Author author, string Title, float Price, string ReleaseNumber, string Kind) : base(author, Title, Price)
         {
             this.ReleaseNumber = ReleaseNumber;
@@ -54,5 +61,14 @@ namespace EpressPublishingHouse
             return base.GetHashCode();
         }
 
+        public override string ToString()
+        {
+            return "Author:\n" + author.ToString() + "\n" 
+                + "Title: " + Title + "\n" 
+                + "Kind: " + Kind + "\n" 
+                + "Release number: " + ReleaseNumber + "\n" 
+                + "Price: " + Price + "\n" 
+                + "Quantity: " + Quantity;
+        }
     }
 }

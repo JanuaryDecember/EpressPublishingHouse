@@ -6,6 +6,13 @@ namespace EpressPublishingHouse
 	{
 		private readonly List<PrintOrder> printOrders;
 		private readonly bool ableToPrintAlbums;
+
+        public PrintingHouse()
+        {
+            printOrders = new List<PrintOrder>();
+            ableToPrintAlbums = false;
+        }
+
 		public PrintingHouse(bool ableToPrintAlbums)
         {
             printOrders = new List<PrintOrder>();

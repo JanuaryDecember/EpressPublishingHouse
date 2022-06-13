@@ -8,6 +8,13 @@ namespace EpressPublishingHouse
         private readonly Author author;
         private bool ContractType;
 
+        public Contract()
+        {
+            ContractId = 0;
+            author = new Author();
+            ContractType = true;
+        }
+
         public Contract(Author author, bool ContractType, uint ContractId)
         {
             this.author = author;

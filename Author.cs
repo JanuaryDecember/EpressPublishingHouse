@@ -23,6 +23,15 @@ namespace EpressPublishingHouse
 			id = ++lastId;
 			orders = new List<AbstractCreation>();
 		}
+
+		public Author(string name, string surname, ushort id)
+		{
+			this.name = name;
+			this.surname = surname;
+			this.id = id;
+			orders = new List<AbstractCreation>();
+		}
+
 		public Author(Author author)
 		{
 			name = author.name;

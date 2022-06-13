@@ -43,5 +43,15 @@ namespace EpressPublishingHouse
         {
             return base.GetHashCode();
         }
+
+        public override string ToString()
+        {
+            return "Author:\n" + author.ToString() + "\n"
+                + "Title: " + Title + "\n"
+                + "Kind: " + Genre + "\n"
+                + "Release number: " + ISBN + "\n"
+                + "Price: " + Price + "\n"
+                + "Quantity: " + Quantity;
+        }
     }
 }

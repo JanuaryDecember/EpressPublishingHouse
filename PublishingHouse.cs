@@ -4,41 +4,50 @@ namespace EpressPublishingHouse
 {
     public class PublishingHouse
     {
+        
         private List<PrintingHouse> printingHouseList;
         private List<Author> authors;
         private List<Contract> contracts;
         private Warehouse warehouse;
-        private List<AbstractCreation> creations;
+        private List<Book> books;
+        private List<Magazine> magazines;
+
         public PublishingHouse(Warehouse warehouse)
         {
-            this.printingHouseList = new List<PrintingHouse>();
-            this.authors = new List<Author>();
-            this.contracts = new List<Contract>();
+            printingHouseList = new List<PrintingHouse>();
+            authors = new List<Author>();
+            contracts = new List<Contract>();
+            books = new List<Book>();
+            magazines = new List<Magazine>();
             this.warehouse = warehouse;
-            this.creations = new List<AbstractCreation>();
         }
-        public int AddCreation(AbstractCreation creation)
+
+
+
+        // // // // // // // Tak chyba lepiej, bo patrzylem ze troche skomplikowany byl ten kod i sprawdzilem czy mozna tak zrobic i mozna
+        public int AddBook(AbstractCreation book)
         {
-            if (creation is Book) //Jeśli dzieło jest książką
+            if(book is Book && !(books.Exists(i => i.Equals(book))))
             {
-                foreach (AbstractCreation c in creations)
-                {
-                    if (c is Book && ((Book)c).Equals((Book)creation)) return 1;    //sprawdza, czy nie ma już na liście takiego tytułu. Jeśli jest, kończy działanie metody
-                }
-                creations.Add(creation); //Jeśli doszło do tego miejsca, to nie ma na liście takiego tytułu i jest on dodawany
+                books.Add((Book)book);
                 return 1;
             }
-            else if (creation is Magazine) //Jeśli dzieło jest czasopismem (takie same działanie jak wyżej)
-            {
-                foreach (AbstractCreation c in creations)
-                {
-                    if (c is Magazine && ((Magazine)c).Equals((Magazine)creation)) return 1;
-                }
-                creations.Add(creation); 
-                return 1;
-            }
-            return 0;
+            else
+                return 0;
         }
+
+        public int AddMagazine(AbstractCreation magazine)
+        {
+            if (magazine is Magazine && !(books.Exists(i => i.Equals(magazine))))
+            {
+                magazines.Add((Magazine)magazine);
+                return 1;
+            }
+            else
+                return 0;
+        }
+        // // // // // // //
+
         public void Print(PrintOrder order)
         {
             //to ogarnę
