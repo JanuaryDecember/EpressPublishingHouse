@@ -5,22 +5,22 @@ namespace EpressPublishingHouse
     public class Contract
     {
         private readonly uint contractId;
-        private static uint lastId;
+        private static uint lastId = 1;
         private readonly Author author;
-        private ushort contractType;
+        private bool contractType;
 
         public Contract()
         {
             contractId = lastId;
             author = new Author();
-            contractType = 0;
+            contractType = false;
             lastId++;
         }
 
-        public Contract(Author author, ushort ContractType)
+        public Contract(Author author, bool contractType)
         {
             this.author = author;
-            this.contractType = ContractType;
+            this.contractType = contractType;
             this.contractId = lastId;
             lastId++;
         }
@@ -38,9 +38,17 @@ namespace EpressPublishingHouse
             return author;
         }
 
-        public ushort GetContractType()
+        public bool GetContractType()
         {
             return contractType;
+        }
+
+        public string ContractTypeToString()
+        {
+            if (contractType)
+                return "Contract of employment";
+            else
+                return "Contract of mandate";
         }
 
         public uint GetContractId()
@@ -50,8 +58,12 @@ namespace EpressPublishingHouse
 
         public void ChangeContractType()
         {
-            Console.WriteLine("Choose type: ");
-            contractType = (ushort)Int32.Parse(Console.ReadLine());
+            Console.WriteLine("Choose type:\n1.Contract of employment\n2.Contract of mandate");
+            int j = Int32.Parse(Console.ReadLine());
+            if ( j == 1)
+                contractType = true;
+            else if(j == 2)
+                contractType = false;
         }
     }
 }

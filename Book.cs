@@ -39,10 +39,6 @@ namespace EpressPublishingHouse
             }
             else return false;
         }
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
 
         public override string ToString()
         {

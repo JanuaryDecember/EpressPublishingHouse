@@ -21,7 +21,7 @@ namespace EpressPublishingHouse
             this.id = ++lastId;
             this.creation = creation;
             this.amount = amount;
-            if (creation is Book && ((Book)creation).GetGenre() == "Album") printOrderType = "Al";    //typ dla albumu
+            if (creation is Book && ((Book)creation).GetGenre().ToLower().Equals("album")) printOrderType = "Al";    //typ dla albumu
             if (creation is Book) printOrderType = "Bk";    //typ dla książki
             else if (creation is Magazine) printOrderType = "Mg";     //typ dla czasopisma
         }

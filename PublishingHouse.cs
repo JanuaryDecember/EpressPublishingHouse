@@ -11,6 +11,8 @@ namespace EpressPublishingHouse
         private Warehouse warehouse;
         private List<Book> books;
         private List<Magazine> magazines;
+        private List<AbstractCreation> orders;
+        private List<AbstractCreation> readyToPrint;
 
         public PublishingHouse(Warehouse warehouse)
         {
@@ -19,7 +21,12 @@ namespace EpressPublishingHouse
             contracts = new List<Contract>();
             books = new List<Book>();
             magazines = new List<Magazine>();
+            orders = new List<AbstractCreation>();
+            readyToPrint = new List<AbstractCreation>();
             this.warehouse = warehouse;
+            printingHouseList.Add(new PrintingHouse(true));
+            printingHouseList.Add(new PrintingHouse(false));
+            printingHouseList.Add(new PrintingHouse(false));
         }
 
         public void AddAuthor()
@@ -71,8 +78,9 @@ namespace EpressPublishingHouse
             if (GetAuthors().Equals(""))
             {
                 Console.Clear();
-                Console.WriteLine("No authors detected! You can't make a contract without any worker!");
-                Thread.Sleep(1000);
+                Console.WriteLine("No authors detected! You can't make a contract without any workers!");
+                Console.WriteLine("Press any key to continue...");
+                Console.ReadKey();
                 Console.Clear();
             }
             else
@@ -84,8 +92,84 @@ namespace EpressPublishingHouse
                     Console.WriteLine("Choose author:\n");
                     Console.WriteLine(GetAuthors());
                     int j = Int32.Parse(Console.ReadLine());
+                    contracts.Add(new Contract(authors[j-1], true));
+                }
+                else if (i == 2)
+                {
+                    Console.WriteLine("Choose author:\n");
+                    Console.WriteLine(GetAuthors());
+                    int j = Int32.Parse(Console.ReadLine());
+                    contracts.Add(new Contract(authors[j - 1], false));
                 }
             }
+        }
+
+        public void MakeOrder()
+        {
+            if (GetAuthors().Equals(""))
+            {
+                Console.Clear();
+                Console.WriteLine("No authors detected! You can't make an order without any workers!");
+                Console.WriteLine("Press any key to continue...");
+                Console.ReadKey();
+                Console.Clear();
+            }
+            else
+            {
+                Console.WriteLine("Choose author:\n");
+                Console.WriteLine(GetAuthors());
+                int j = Int32.Parse(Console.ReadLine());
+                Author author = new Author(authors[j-1]);
+                Console.WriteLine("Choose order type:\n1.Book\n2.Magazine");
+                j = Int32.Parse(Console.ReadLine());
+                if(j == 1)
+                {
+                    string title, genre, isbn;
+                    float price;
+                    Console.WriteLine("Title: ");
+                    title = Console.ReadLine();
+                    Console.WriteLine("Genre: ");
+                    genre = Console.ReadLine();
+                    Console.WriteLine("isbn: ");
+                    isbn = Console.ReadLine();
+                    Console.WriteLine("Price: ");
+                    price = float.Parse(Console.ReadLine());
+                    orders.Add(new Book(author, title, price, genre, isbn));
+                }
+            }
+        }
+
+        public string GetOrders()
+        {
+            string orderlist = "";
+            int i = 1;
+            foreach (AbstractCreation order in orders)
+            {
+                orderlist += i.ToString() + ".\nAuthor:\n" + order.GetAuthor().ToString() + "\nTitle: " + order.GetTitle() +
+                    "\nGenre: " + order.GetType() + "\n";
+                i++;
+            }
+            return orderlist;
+        }
+
+        public string GetContractsAndOrders()
+        {
+            string list = "Orders:\n";
+            int i = 1;
+            foreach (AbstractCreation order in orders)
+            {
+                list += i.ToString() + ".\nAuthor: " + order.GetAuthor().ToString() + "\nTitle: " + order.GetTitle() +
+                    "\nGenre: " + order.GetType() + "\n";
+                i++;
+            }
+            list += "\nContracts:\n";
+            i = 1;
+            foreach (Contract contract in contracts)
+            {
+                list += i.ToString() + ".\nId: " + contract.GetContractId() + "\nContract type: " + contract.ContractTypeToString() + "\nAuthor: " + contract.GetAuthor().ToString() + "\n";
+                i++;
+            }
+            return list;
         }
 
         public int AddBook(AbstractCreation book)
@@ -110,6 +194,79 @@ namespace EpressPublishingHouse
                 return 0;
         }
 
+        public void FinishOrder()
+        {
+            if (!GetOrders().Equals(""))
+            {
+                Console.WriteLine("Choose which order to finish: ");
+                Console.WriteLine(GetOrders());
+                int iter = Int32.Parse(Console.ReadLine());
+                readyToPrint.Add(orders[iter - 1]);
+                orders.RemoveAt(iter - 1);
+            }
+            else
+            {
+                Console.Clear();
+                Console.WriteLine("No orders found!");
+                Console.WriteLine("Press any key to continue...");
+                Console.ReadKey();
+                Console.Clear();
+            }
+
+        }
+
+        public string GetReadyToPrint()
+        {
+            string orderlist = "";
+            int i = 1;
+            foreach (AbstractCreation order in readyToPrint)
+            {
+                orderlist += i.ToString() + ".\nAuthor:\n" + order.GetAuthor().ToString() + "\nTitle: " + order.GetTitle() +
+                    "\nGenre: " + order.GetType() + "\n";
+                i++;
+            }
+            return orderlist;
+        }
+
+        public void NewPrintOrder()
+        {
+            if (!GetReadyToPrint().Equals(""))
+            {
+                Console.WriteLine("Choose order ready to print:\n");
+                Console.WriteLine(GetReadyToPrint());
+                int iter = Int32.Parse(Console.ReadLine());
+                Console.Clear();
+                Console.WriteLine("How many creations to print: ");
+                int amount = Int32.Parse(Console.ReadLine());
+                Print(new PrintOrder(readyToPrint[iter - 1], (ushort)amount));
+                
+            }
+            else
+            {
+                Console.Clear();
+                Console.WriteLine("There are no orders that can be printed!");
+                Console.WriteLine("Press any key to continue...");
+                Console.ReadKey();
+                Console.Clear();
+            }
+ 
+            
+        }
+
+        public string GetPrintOrders()
+        {
+            string orderlist = "";
+            int i = 1;
+            foreach (PrintingHouse printingHouse in printingHouseList)
+            {
+                foreach(PrintOrder printorder in printingHouse.GetPrintOrders())
+                {
+                    orderlist += i.ToString() + ".\n PrintOrder: " + printorder.toString() + "\n";
+                }
+            }
+            return orderlist;
+        }
+
         public void Print(PrintOrder order)
         {
             if (order.GetPrintOrderType() == "Al")
@@ -130,6 +287,7 @@ namespace EpressPublishingHouse
                     }
                 (printingHouseList.ElementAt(indeks)).AddNewPrintOrder(order);
             }
+
         }
 
         public Warehouse GetWarehouse() { return warehouse; }
