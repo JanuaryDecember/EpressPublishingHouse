@@ -108,7 +108,9 @@
                                 Console.ReadKey();
                                 break;  
                             case 3:
-                                
+                                Console.Clear();
+                                Epress.FinishPrinting(Epress);
+                                Console.Clear();
                                 break;
                             case 4:
                                 Console.Clear();
@@ -116,7 +118,25 @@
                         }
                         break;
                     case 4:
+                        Console.Clear();
                         ShowMenu(4);
+                        switch (Int32.Parse(Console.ReadLine()))
+                        {
+                            case 1:
+                                Console.Clear();
+                                Console.Clear();
+                                break;
+                            case 2:
+                                Console.Clear();
+                                Epress.ShowStock();
+                                Console.WriteLine("Press any key to continue...");
+                                Console.ReadKey();
+                                break;
+                            case 3:
+                                Console.Clear();
+                                break;
+                        }
+                        Console.Clear();
                         break;
                     case 5:
                         shouldStop = true;

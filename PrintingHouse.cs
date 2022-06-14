@@ -4,8 +4,8 @@ namespace EpressPublishingHouse
 {
 	public class PrintingHouse
 	{
-		private readonly List<PrintOrder> printOrders; //lista zleceń drruku
-		private readonly bool ableToPrintAlbums; //czy drukarnia jest w stanie drukować albumy
+		private List<PrintOrder> printOrders; //lista zleceń drruku
+		private bool ableToPrintAlbums; //czy drukarnia jest w stanie drukować albumy
 
         public PrintingHouse() //konstruktor bezparametrowy
         {
@@ -35,14 +35,9 @@ namespace EpressPublishingHouse
         }
         public void EndOrder(uint id, PublishingHouse Epress) //kończenie zlecenia
         {
-            foreach(PrintOrder printOrder in printOrders)
-            {
-                if (printOrder.GetId() == id)
-                {
-                    printOrder.Finish(Epress); //podejmowane są odpowiednie kroki kończące zlecenie
-                    printOrders.Remove(printOrder); //zlecenie jest usuwane z listy
-                }
-            }
+            PrintOrder pr = printOrders.Find(o => o.GetId().Equals(id));
+            pr.Finish(Epress); //podejmowane są odpowiednie kroki kończące zlecenie
+            printOrders.Remove(pr); //zlecenie jest usuwane z listy
         }
         public List<PrintOrder> GetPrintOrders() { return printOrders; }
         public bool GetAbleToPrintAlbums() { return ableToPrintAlbums; }

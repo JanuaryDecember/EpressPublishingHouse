@@ -136,6 +136,20 @@ namespace EpressPublishingHouse
                     price = float.Parse(Console.ReadLine());
                     orders.Add(new Book(author, title, price, genre, isbn));
                 }
+                else if (j == 2)
+                {
+                    string title, kind, releasenumber;
+                    float price;
+                    Console.WriteLine("Title: ");
+                    title = Console.ReadLine();
+                    Console.WriteLine("kind: ");
+                    kind = Console.ReadLine();
+                    Console.WriteLine("releasenumber: ");
+                    releasenumber = Console.ReadLine();
+                    Console.WriteLine("Price: ");
+                    price = float.Parse(Console.ReadLine());
+                    orders.Add(new Magazine(author, title, price, releasenumber, kind));
+                }
             }
         }
 
@@ -170,6 +184,14 @@ namespace EpressPublishingHouse
                 i++;
             }
             return list;
+        }
+
+        public void Buy()
+        {
+            warehouse.ShowStock();
+            Console.Write("Choose book or magazine:");
+            Console.ReadLine();
+
         }
 
         public int AddBook(AbstractCreation book)
@@ -239,7 +261,7 @@ namespace EpressPublishingHouse
                 Console.WriteLine("How many creations to print: ");
                 int amount = Int32.Parse(Console.ReadLine());
                 Print(new PrintOrder(readyToPrint[iter - 1], (ushort)amount));
-                
+                readyToPrint.RemoveAt(iter - 1);
             }
             else
             {
@@ -257,14 +279,32 @@ namespace EpressPublishingHouse
         {
             string orderlist = "";
             int i = 1;
+            int j = 1;
             foreach (PrintingHouse printingHouse in printingHouseList)
             {
                 foreach(PrintOrder printorder in printingHouse.GetPrintOrders())
                 {
-                    orderlist += i.ToString() + ".\n PrintOrder: " + printorder.toString() + "\n";
+                    orderlist += "Printing house no " + j.ToString() + ".\n" + i.ToString() + ".\n PrintOrder: " + printorder.toString() + "\n";
                 }
+                j++;
             }
             return orderlist;
+        }
+
+        public void FinishPrinting(PublishingHouse epress)
+        {
+            Console.WriteLine(GetPrintOrders());
+            Console.WriteLine("Choose number of printing house: ");
+            int j = Int32.Parse(Console.ReadLine());
+            Console.WriteLine("Choose order id to finish: ");
+            int i = Int32.Parse(Console.ReadLine());
+            PrintOrder pr = printingHouseList[j - 1].GetPrintOrders().Find(o => o.GetId().Equals(i));
+            printingHouseList[j - 1].EndOrder((uint)i, epress);
+        }
+
+        public void ShowStock()
+        {
+            warehouse.ShowStock();
         }
 
         public void Print(PrintOrder order)

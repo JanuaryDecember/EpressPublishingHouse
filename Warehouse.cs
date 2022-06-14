@@ -5,17 +5,38 @@ namespace EpressPublishingHouse
 {
 	public class Warehouse
 	{
-		private readonly Dictionary<string, List<Book>> books;
-		private readonly List<Magazine> magazines;
+		private	Dictionary<string, List<Book>> books;
+		private List<Magazine> magazines;
 		public Warehouse()
 		{
 			magazines = new List<Magazine>();
 			books = new Dictionary<string, List<Book>>();
 		}
 
+		public void ShowStock()
+        {
+			List<string> keylist = new List<string>(books.Keys.ToList());
+			Console.WriteLine("Books by genre:\n");
+			foreach (string key in keylist)
+            {
+				Console.WriteLine(key);
+				foreach(Book book in books[key])
+                {
+					Console.WriteLine(book.ToString());
+                }
+            }
+			Console.WriteLine("Magazines:");
+			foreach (Magazine magazine in magazines)
+            {
+				Console.WriteLine(magazine.ToString());
+            }
+        }
+
 		public void AddBook(string genre, Book book)
         {
-            books[genre].Add(book);
+			if(!books.ContainsKey(genre))
+				books.Add(genre, new List<Book>());
+			books[genre].Add(book);
         }
 
 		public void AddMagazine(Magazine magazine)
