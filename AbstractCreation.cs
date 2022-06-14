@@ -36,6 +36,11 @@ namespace EpressPublishingHouse
             {
                 Console.WriteLine("There are not enough books");
             }
+            else
+            {
+                this.Quantity -= Quantity;
+                Console.WriteLine("Reduced the amount of books!");
+            }
         }
     }
 }

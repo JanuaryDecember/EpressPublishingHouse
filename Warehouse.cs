@@ -61,5 +61,6 @@ namespace EpressPublishingHouse
 					magazine1.MenageQuantity(Quantity, false);
 			}
 		}
+		
 	}
 }

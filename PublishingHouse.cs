@@ -22,8 +22,6 @@ namespace EpressPublishingHouse
             this.warehouse = warehouse;
         }
 
-
-
         // // // // // // // Tak chyba lepiej, bo patrzylem ze troche skomplikowany byl ten kod i sprawdzilem czy mozna tak zrobic i mozna
         public int AddBook(AbstractCreation book)
         {
@@ -50,7 +48,26 @@ namespace EpressPublishingHouse
 
         public void Print(PrintOrder order)
         {
-            //to ogarnę
+            if (order.GetPrintOrderType() == "Al")
+            {
+                foreach (PrintingHouse printingHouse in printingHouseList)
+                    if (printingHouse.GetAbleToPrintAlbums())
+                        printingHouse.AddNewPrintOrder(order); //bo wiemy, że jest tylko jedna taka drukarnia
+            }
+            else
+            {
+                uint minimum = uint.MaxValue;
+                int indeks = 0;
+                foreach (PrintingHouse printingHouse in printingHouseList)
+                    if (printingHouse.HowBusy() <= minimum)
+                    {
+                        minimum = printingHouse.HowBusy(); //znajduje najmniej zajętą drukarnię
+                        indeks = printingHouseList.IndexOf(printingHouse); //zapisuje indeks tej drukarni
+                    }
+                (printingHouseList.ElementAt(indeks)).AddNewPrintOrder(order);
+            }
         }
+
+        public Warehouse GetWarehouse() { return warehouse; }
     }
 }

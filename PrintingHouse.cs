@@ -4,43 +4,43 @@ namespace EpressPublishingHouse
 {
 	public class PrintingHouse
 	{
-		private readonly List<PrintOrder> printOrders;
-		private readonly bool ableToPrintAlbums;
+		private readonly List<PrintOrder> printOrders; //lista zleceń drruku
+		private readonly bool ableToPrintAlbums; //czy drukarnia jest w stanie drukować albumy
 
-        public PrintingHouse()
+        public PrintingHouse() //konstruktor bezparametrowy
         {
             printOrders = new List<PrintOrder>();
             ableToPrintAlbums = false;
         }
-
-		public PrintingHouse(bool ableToPrintAlbums)
+		public PrintingHouse(bool ableToPrintAlbums) //konstruktor
         {
             printOrders = new List<PrintOrder>();
             this.ableToPrintAlbums = ableToPrintAlbums;
         }
-        public PrintingHouse(PrintingHouse printingHouse)
+        public PrintingHouse(PrintingHouse printingHouse) //konstruktor kopiujący
         {
             ableToPrintAlbums = printingHouse.ableToPrintAlbums;
             printOrders = new List<PrintOrder>(printingHouse.printOrders);
         }
-        public void AddNewPrintOrder(PrintOrder printOrder) { printOrders.Add(printOrder); }
-        public void ShowOrders()
+        public void AddNewPrintOrder(PrintOrder printOrder) { printOrders.Add(printOrder); } //dodawanie zlecenia do listy
+        public void ShowOrders() //wyświetlenie zleceń
         {
             uint i = 1;
+            Console.WriteLine("Nr. - ID - Type - Title - Amount");
             foreach (PrintOrder printOrder in printOrders)
             {
-                Console.WriteLine(i + " " + printOrder.ToString());
+                Console.WriteLine(i + " - " + printOrder.toString());
                 i++;
             }
         }
-        public void EndOrder(PrintOrder printOrder)
+        public void EndOrder(uint id, PublishingHouse Epress) //kończenie zlecenia
         {
-            foreach(PrintOrder printOrder1 in printOrders)
+            foreach(PrintOrder printOrder in printOrders)
             {
-                if (printOrder1.Equals(printOrder))
+                if (printOrder.GetId() == id)
                 {
-                    printOrder1.Finish();
-                    printOrders.Remove(printOrder1);
+                    printOrder.Finish(Epress); //podejmowane są odpowiednie kroki kończące zlecenie
+                    printOrders.Remove(printOrder); //zlecenie jest usuwane z listy
                 }
             }
         }
