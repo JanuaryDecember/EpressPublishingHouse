@@ -5,10 +5,10 @@ namespace EpressPublishingHouse
 {
 	public class Author
 	{
-		private readonly string name, surname;
-		private readonly ushort id;
+		private string name, surname;
+		private ushort id;
 		private static ushort lastId = 0;
-		private readonly List<AbstractCreation> orders;
+		private List<AbstractCreation> orders;
 		public Author()
 		{
 			name = "Null";
@@ -39,6 +39,15 @@ namespace EpressPublishingHouse
 			id = author.id;
 			orders = new List<AbstractCreation>(author.orders);
 		}
+
+		public static void DecreaseLastId()
+        {
+			lastId--;
+        }
+		public void IdFix()
+        {
+			id--;
+        }
 		public ushort GetId() { return id; }
 		public string GetName() { return name; }
 		public string GetSurname() { return surname; }
@@ -59,7 +68,7 @@ namespace EpressPublishingHouse
 			else return false;
 		}
 		public override int GetHashCode() { return base.GetHashCode(); } 
-		public override string ToString() { return "Name: " + name + "\nSurname: " + surname; }
+		public override string ToString() { return "Name: " + name + "\nSurname: " + surname + "\nId: " + id; }
 		public void NewOrder(AbstractCreation creation) { orders.Add(creation); }
 		public void ShowOrders()
         {

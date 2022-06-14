@@ -22,7 +22,72 @@ namespace EpressPublishingHouse
             this.warehouse = warehouse;
         }
 
-        // // // // // // // Tak chyba lepiej, bo patrzylem ze troche skomplikowany byl ten kod i sprawdzilem czy mozna tak zrobic i mozna
+        public void AddAuthor()
+        {
+            Console.WriteLine("Name:");
+            string name = Console.ReadLine();
+            Console.WriteLine("Surname: ");
+            string surname = Console.ReadLine();
+            Author author = new Author(name, surname);
+            authors.Add(author);
+        }
+
+        public Author GetAuthorByIndex(int i)
+        {
+            return authors[i];
+        }
+
+        public string GetAuthors()
+        {
+            string authorlist = "";
+            uint i = 1;
+            foreach (Author author in authors)
+            {
+                authorlist += i.ToString() + ".\n  Name: " + author.GetName() + "\n  Surname: " + author.GetSurname() + "\n  Id: " + author.GetId() + "\n";
+                i++;
+            }
+            return authorlist;
+        }
+
+        public void RemoveAuthor()
+        {
+            if (GetAuthors().Equals(""))
+            {
+                Console.WriteLine("No authors found!\nPress any key to continue...");
+                Console.ReadKey();
+                Console.Clear();
+            }
+            else
+            {
+                Console.WriteLine("Choose which author you want to delete:");
+                Console.WriteLine(GetAuthors());
+                authors.RemoveAt(Int32.Parse(Console.ReadLine()) - 1);
+                
+            }
+        }
+
+        public void AddContract()
+        {
+            if (GetAuthors().Equals(""))
+            {
+                Console.Clear();
+                Console.WriteLine("No authors detected! You can't make a contract without any worker!");
+                Thread.Sleep(1000);
+                Console.Clear();
+            }
+            else
+            {
+                Console.WriteLine("Choose contract type:\n1.Contract of employment\n2.Contract of mandate\n3.Go back");
+                int i = Int32.Parse(Console.ReadLine());
+                if (i == 1)
+                {
+                    Console.WriteLine("Choose author:\n");
+                    Console.WriteLine(GetAuthors());
+                    int j = Int32.Parse(Console.ReadLine());
+                }
+            }
+        }
+
         public int AddBook(AbstractCreation book)
         {
             if(book is Book && !(books.Exists(i => i.Equals(book))))
@@ -44,7 +109,6 @@ namespace EpressPublishingHouse
             else
                 return 0;
         }
-        // // // // // // //
 
         public void Print(PrintOrder order)
         {
@@ -69,5 +133,6 @@ namespace EpressPublishingHouse
         }
 
         public Warehouse GetWarehouse() { return warehouse; }
+
     }
 }

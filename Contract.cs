@@ -4,28 +4,33 @@ namespace EpressPublishingHouse
 {
     public class Contract
     {
-        private readonly uint ContractId;
+        private readonly uint contractId;
+        private static uint lastId;
         private readonly Author author;
-        private bool ContractType;
+        private ushort contractType;
 
         public Contract()
         {
-            ContractId = 0;
+            contractId = lastId;
             author = new Author();
-            ContractType = true;
+            contractType = 0;
+            lastId++;
         }
 
-        public Contract(Author author, bool ContractType, uint ContractId)
+        public Contract(Author author, ushort ContractType)
         {
             this.author = author;
-            this.ContractType = ContractType;
-            this.ContractId = ContractId;
+            this.contractType = ContractType;
+            this.contractId = lastId;
+            lastId++;
         }
 
         public Contract(Contract contract)
         {
-            ContractType = contract.ContractType;
+            contractType = contract.contractType;
             author = contract.author;
+            contractId = lastId;
+            lastId++;
         }
 
         public Author GetAuthor()
@@ -33,26 +38,20 @@ namespace EpressPublishingHouse
             return author;
         }
 
-        public bool GetContractType()
+        public ushort GetContractType()
         {
-            return ContractType;
-        }
-
-        public string ContractTypeToString()
-        {
-            if (!ContractType)
-                return "Contract of employment";
-            else return "Contract of commission";
+            return contractType;
         }
 
         public uint GetContractId()
         {
-            return ContractId;
+            return contractId;
         }
 
         public void ChangeContractType()
         {
-            ContractType = !ContractType;
+            Console.WriteLine("Choose type: ");
+            contractType = (ushort)Int32.Parse(Console.ReadLine());
         }
     }
 }
