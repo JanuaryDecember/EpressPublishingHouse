@@ -40,8 +40,8 @@ namespace EpressPublishingHouse
         {
             return "Author:\n" + author.ToString() + "\n"
                 + "Title: " + Title + "\n"
-                + "Kind: " + Genre + "\n"
-                + "Release number: " + ISBN + "\n"
+                + "Genre: " + Genre + "\n"
+                + "ISBN: " + ISBN + "\n"
                 + "Price: " + Price + "\n"
                 + "Quantity: " + Quantity;
         }

@@ -26,16 +26,14 @@ namespace EpressPublishingHouse
             if (Option) //true = zwiększanie ilości egzemplarzy; false = zmniejszanie ilości egzemplarzy
             {
                 this.Quantity += Quantity;
-                Console.WriteLine("Added few books!");
             }
             else if (!Option && this.Quantity <= Quantity)
             {
-                Console.WriteLine("There are not enough books");
+                Console.WriteLine("There are not enough creations!");
             }
             else
             {
                 this.Quantity -= Quantity;
-                Console.WriteLine("Reduced the amount of books!");
             }
         }
         public virtual Author GetAuthor() { return author; }

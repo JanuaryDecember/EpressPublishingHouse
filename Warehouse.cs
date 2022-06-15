@@ -52,13 +52,8 @@ namespace EpressPublishingHouse
         }
 		public void ReduceBookQuantity(uint Quantity, Book book) //zmniejszanie ilości książek w magazynie
 		{
-			foreach (Book book1 in books[book.GetGenre()])
-			{
-				if (book1.Equals(book))
-				{
-					book1.MenageQuantity(Quantity, false);
-				}
-			}
+			List<Book> b = books[book.GetGenre()];
+			b.Find(o => o.GetISBN().ToLower().Equals(book.GetISBN().ToLower())).MenageQuantity(Quantity, false);
 		}
 		public void AddMagazineQuantity(uint Quantity, Magazine magazine) //zwiększanie ilości czasopism w magazynie
 		{
@@ -76,5 +71,23 @@ namespace EpressPublishingHouse
 					magazine1.MenageQuantity(Quantity, false);
 			}
 		}
+
+		public Book GetBookByIsbn(string isbn)
+        {
+			List<string> keylist = new List<string>(books.Keys.ToList());
+			foreach (string key in keylist)
+			{
+				if (books[key].Exists(b => b.GetISBN().ToLower().Equals(isbn.ToLower())))
+				{
+					return books[key].Find(b => b.GetISBN().ToLower().Equals(isbn.ToLower()));
+				}
+			}
+			return null;
+        }
+
+		public Magazine GetMagazineByReleaseNumber(string release)
+        {
+			return magazines.Find(m => m.GetReleaseNumber().ToLower().Equals(release.ToLower()));
+        }
 	}
 }

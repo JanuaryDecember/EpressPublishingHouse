@@ -124,6 +124,7 @@
                         {
                             case 1:
                                 Console.Clear();
+                                Epress.Buy();
                                 Console.Clear();
                                 break;
                             case 2:

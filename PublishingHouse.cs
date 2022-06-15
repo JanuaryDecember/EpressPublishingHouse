@@ -99,6 +99,7 @@ namespace EpressPublishingHouse
                 int j = Int32.Parse(Console.ReadLine());
                 Author author = new Author(authors[j-1]);
                 Console.WriteLine("Choose order type:\n1.Book\n2.Magazine");
+                j = 0;
                 j = Int32.Parse(Console.ReadLine());
                 if(j == 1)
                 {
@@ -112,7 +113,7 @@ namespace EpressPublishingHouse
                     isbn = Console.ReadLine();
                     Console.WriteLine("Price: ");
                     price = float.Parse(Console.ReadLine());
-                    orders.Add(new Book(author, title, price, genre, isbn));
+                    orders.Add(new Book(author, title, price, isbn, genre));
                 }
                 else if (j == 2)
                 {
@@ -132,9 +133,47 @@ namespace EpressPublishingHouse
         }
         public void Buy() 
         {
-            warehouse.ShowStock();
-            Console.Write("Choose book or magazine:");
-            Console.ReadLine();
+            Console.Write("Choose 1.book or 2.magazine:");
+            int iter = int.Parse(Console.ReadLine());
+            if(iter == 1)
+            {
+                warehouse.ShowStock();
+                Console.WriteLine("Choose book by ISBN: ");
+                string isbn = Console.ReadLine();
+                Console.WriteLine("Choose quantity: ");
+                uint amount = (uint)int.Parse(Console.ReadLine());
+                if (warehouse.GetBookByIsbn(isbn).GetQuantity() < amount)
+                {
+                    Console.WriteLine("Not enough books!");
+                }
+                else if (warehouse.GetBookByIsbn(isbn) != null)
+                {
+                    warehouse.ReduceBookQuantity(amount, warehouse.GetBookByIsbn(isbn));
+                    Console.WriteLine("You have just bought our book!");
+                }
+                else if(warehouse.GetBookByIsbn(isbn) == null)
+                    Console.WriteLine("Book not found!");
+                Console.WriteLine("Press any key to continue...");
+                Console.ReadKey();
+            }
+            if(iter == 2)
+            {
+                warehouse.ShowStock();
+                Console.WriteLine("Choose magazine by release number: ");
+                string release = Console.ReadLine();
+                Console.WriteLine("Choose quantity: ");
+                uint amount = (uint)int.Parse(Console.ReadLine());
+                if (warehouse.GetMagazineByReleaseNumber(release) != null && warehouse.GetMagazineByReleaseNumber(release).GetQuantity() > amount)
+                {
+                    warehouse.ReduceMagazineQuantity(amount, warehouse.GetMagazineByReleaseNumber(release));
+                    Console.WriteLine("You have just bought our magazine!");
+                }
+                else
+                    Console.WriteLine("Either magazine was not found, or we didn't have enough magazines!");
+                Console.WriteLine("Press any key to continue...");
+                Console.ReadKey();
+            }
+
         }
         public int AddBook(AbstractCreation book) //dodawanie książki do listy
         {
@@ -271,8 +310,11 @@ namespace EpressPublishingHouse
             int i = 1;
             foreach (AbstractCreation order in orders)
             {
-                list += i.ToString() + ".\nAuthor: " + order.GetAuthor().ToString() + "\nTitle: " + order.GetTitle() +
-                    "\nGenre: " + order.GetType() + "\n";
+                list += i.ToString() + ".\nAuthor: " + order.GetAuthor().ToString() + "\nTitle: " + order.GetTitle();
+                if (order is Book)
+                    list += "\nGenre: " + ((Book)order).GetGenre() + "\n";
+                else
+                    list += "\n";
                 i++;
             }
             list += "\nContracts:\n";
