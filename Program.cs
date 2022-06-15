@@ -1,7 +1,32 @@
-﻿namespace EpressPublishingHouse
+﻿using System.Runtime.Serialization;
+using System.Xml;
+namespace EpressPublishingHouse
 {
     class Program
     {
+        static void SaveData<T>(T obj, string filepath)
+        {
+            var serializer = new DataContractSerializer(typeof(T));
+            var settings = new XmlWriterSettings()
+            {
+                Indent = true,
+                IndentChars = "\t",
+            };
+            var writer = XmlWriter.Create(filepath, settings);
+            serializer.WriteObject(writer, obj);
+        }
+
+        static T LoadData<T>(string filepath)
+        {
+            var filestream = new FileStream(filepath, FileMode.Open);
+            var reader = XmlDictionaryReader.CreateTextReader(filestream, new XmlDictionaryReaderQuotas());
+            var serializer = new DataContractSerializer(typeof(T));
+            T obj = (T)serializer.ReadObject(reader, true);
+            reader.Close();
+            filestream.Close();
+            return obj;
+        }
+
         private static void ShowMenu(ushort c)
         {
             switch (c)
@@ -26,6 +51,8 @@
         static void Main()
         {
             PublishingHouse Epress = new PublishingHouse(new Warehouse());
+            if (File.Exists("epress"))
+                Epress = LoadData<PublishingHouse>("epress");
             bool shouldStop = false;
             while (!shouldStop)
             {
@@ -152,6 +179,7 @@
                         break;
                 }
             }
+            SaveData<PublishingHouse>(Epress, "epress");
             Console.WriteLine("Program has ended!\nPress any key to continue...");
             Console.ReadKey();
         }

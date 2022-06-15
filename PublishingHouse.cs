@@ -1,17 +1,25 @@
 ﻿using System;
-
+using System.Runtime.Serialization;
 namespace EpressPublishingHouse
 {
+    [DataContract]
     public class PublishingHouse
     {
-        
+        [DataMember]
         private List<PrintingHouse> printingHouseList; //lista drukarni
+        [DataMember]
         private List<Author> authors; //lista autorów
+        [DataMember]
         private List<Contract> contracts; //lista umów
+        [DataMember]
         private Warehouse warehouse; //podłączony magazyn
+        [DataMember]
         private List<Book> books; //lista wydanych książek
+        [DataMember]
         private List<Magazine> magazines; //lista wydanych magazynów
+        [DataMember]
         private List<AbstractCreation> orders;  //lista utworów, zleconych do wykonania 
+        [DataMember]
         private List<AbstractCreation> readyToPrint; //lista utworów, które zostały wykonane i są gotowe do wydruku
         public PublishingHouse(Warehouse warehouse) //konstruktor
         {
