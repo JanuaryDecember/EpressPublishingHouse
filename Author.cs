@@ -5,49 +5,30 @@ namespace EpressPublishingHouse
 {
 	public class Author
 	{
-		private string name, surname;
-		private ushort id;
-		private static ushort lastId = 0;
-		
-		public Author()
+		private string name, surname; //imię i nazwisko autora
+		private ushort id; //id autora
+		private static ushort lastId = 0; //id poprzednio stworzonego autora
+		public Author() //konstruktor bezparametrowy
 		{
-			name = "Null";
-			surname = "Null";
+			name = "Gall";
+			surname = "Anonim";
 			id = ++lastId;
 		}
-		public Author(string name, string surname)
+		public Author(string name, string surname) //konstruktor
 		{
 			this.name = name;
 			this.surname = surname;
 			id = ++lastId;
 		}
-
-		public Author(string name, string surname, ushort id)
-		{
-			this.name = name;
-			this.surname = surname;
-			this.id = id;
-		}
-
-		public Author(Author author)
+		public Author(Author author) //konstruktor kopiujący
 		{
 			name = author.name;
 			surname = author.surname;
 			id = author.id;
 		}
-
-		public static void DecreaseLastId()
-        {
-			lastId--;
-        }
-		public void IdFix()
-        {
-			id--;
-        }
-		public ushort GetId() { return id; }
-		public string GetName() { return name; }
-		public string GetSurname() { return surname; }
-		public override bool Equals(object? obj)
+		public static void DecreaseLastId() { lastId--; } //metoda zmniejszająca lastId
+		public void IdFix() { id--; } //metoda zmniejszająca id autora
+		public override bool Equals(object? obj) //metoda sprawdzająca, czy dwaj autorzy są tożsami
 		{
 			if (obj != null)
 			{
@@ -63,6 +44,9 @@ namespace EpressPublishingHouse
 			}
 			else return false;
 		}
-		public override string ToString() { return "Id: " + id + " Name: " + name + " Surname: " + surname; }
+		public override string ToString() { return "Id: " + id + " Name: " + name + " Surname: " + surname; } //metoda zwracająca dane autora w postaci tekstowej
+		public ushort GetId() { return id; }
+		public string GetName() { return name; }
+		public string GetSurname() { return surname; }
 	}
 }

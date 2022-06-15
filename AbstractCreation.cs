@@ -4,30 +4,26 @@ namespace EpressPublishingHouse
 {
     public abstract class AbstractCreation
     {
-        protected Author author;
-        protected string Title;
-        protected float Price;
-        protected uint Quantity = 0;
-        protected AbstractCreation()
+        protected Author author; //autor utworu
+        protected string Title; //tytuł utworu
+        protected float Price; //cena utworu
+        protected uint Quantity = 0; //ilość egzemplarzy w magazynie
+        protected AbstractCreation() //konstruktor bezparametrowy
         {
-            author = new Author("Null", "Null");
-            Title = "Null";
+            author = new Author();
+            Title = "Title";
             Price = 0;
         }
-        protected AbstractCreation(Author author, string Title, float Price)
+        protected AbstractCreation(Author author, string Title, float Price) //konstruktor
         {
             this.author = author;
             this.Title = Title;
             this.Price = Price;
         }
-        public virtual Author GetAuthor() { return author; }
-        public virtual string GetTitle() { return Title; }
-        public virtual float GetPrice() { return Price; }
-        public virtual uint GetQuantity() { return Quantity; }
-        public virtual void SetPrice(float Price) { this.Price = Price; }
-        public virtual void MenageQuantity(uint Quantity, bool Option)
+        public virtual void SetPrice(float Price) { this.Price = Price; } //ustawianie ceny
+        public virtual void MenageQuantity(uint Quantity, bool Option) //zmiana ilości egzemplarzy
         {
-            if (Option)
+            if (Option) //true = zwiększanie ilości egzemplarzy; false = zmniejszanie ilości egzemplarzy
             {
                 this.Quantity += Quantity;
                 Console.WriteLine("Added few books!");
@@ -42,6 +38,10 @@ namespace EpressPublishingHouse
                 Console.WriteLine("Reduced the amount of books!");
             }
         }
+        public virtual Author GetAuthor() { return author; }
+        public virtual string GetTitle() { return Title; }
+        public virtual float GetPrice() { return Price; }
+        public virtual uint GetQuantity() { return Quantity; }
     }
 }
 

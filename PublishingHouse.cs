@@ -5,16 +5,15 @@ namespace EpressPublishingHouse
     public class PublishingHouse
     {
         
-        private List<PrintingHouse> printingHouseList;
-        private List<Author> authors;
-        private List<Contract> contracts;
-        private Warehouse warehouse;
-        private List<Book> books;
-        private List<Magazine> magazines;
-        private List<AbstractCreation> orders;
-        private List<AbstractCreation> readyToPrint;
-
-        public PublishingHouse(Warehouse warehouse)
+        private List<PrintingHouse> printingHouseList; //lista drukarni
+        private List<Author> authors; //lista autorów
+        private List<Contract> contracts; //lista umów
+        private Warehouse warehouse; //podłączony magazyn
+        private List<Book> books; //lista wydanych książek
+        private List<Magazine> magazines; //lista wydanych magazynów
+        private List<AbstractCreation> orders;  //lista utworów, zleconych do wykonania 
+        private List<AbstractCreation> readyToPrint; //lista utworów, które zostały wykonane i są gotowe do wydruku
+        public PublishingHouse(Warehouse warehouse) //konstruktor
         {
             printingHouseList = new List<PrintingHouse>();
             authors = new List<Author>();
@@ -28,8 +27,7 @@ namespace EpressPublishingHouse
             printingHouseList.Add(new PrintingHouse(false));
             printingHouseList.Add(new PrintingHouse(false));
         }
-
-        public void AddAuthor()
+        public void AddAuthor() //dodawanie autora do listy
         {
             Console.WriteLine("Name:");
             string name = Console.ReadLine();
@@ -38,25 +36,7 @@ namespace EpressPublishingHouse
             Author author = new Author(name, surname);
             authors.Add(author);
         }
-
-        public Author GetAuthorByIndex(int i)
-        {
-            return authors[i];
-        }
-
-        public string GetAuthors()
-        {
-            string authorlist = "";
-            uint i = 1;
-            foreach (Author author in authors)
-            {
-                authorlist += i.ToString() + ".\n  Name: " + author.GetName() + "\n  Surname: " + author.GetSurname() + "\n  Id: " + author.GetId() + "\n";
-                i++;
-            }
-            return authorlist;
-        }
-
-        public void RemoveAuthor()
+        public void RemoveAuthor() //usuwanie autora z listy
         {
             if (GetAuthors().Equals(""))
             {
@@ -72,8 +52,7 @@ namespace EpressPublishingHouse
                 
             }
         }
-
-        public void AddContract()
+        public void AddContract() //dodawanie umowy do listy
         {
             if (GetAuthors().Equals(""))
             {
@@ -103,8 +82,7 @@ namespace EpressPublishingHouse
                 }
             }
         }
-
-        public void MakeOrder()
+        public void MakeOrder() //zlecanie autorowi wykonania konkretnego utworu
         {
             if (GetAuthors().Equals(""))
             {
@@ -152,49 +130,13 @@ namespace EpressPublishingHouse
                 }
             }
         }
-
-        public string GetOrders()
-        {
-            string orderlist = "";
-            int i = 1;
-            foreach (AbstractCreation order in orders)
-            {
-                orderlist += i.ToString() + ".\nAuthor:\n" + order.GetAuthor().ToString() + "\nTitle: " + order.GetTitle() +
-                    "\nGenre: " + order.GetType() + "\n";
-                i++;
-            }
-            return orderlist;
-        }
-
-        public string GetContractsAndOrders()
-        {
-            string list = "Orders:\n";
-            int i = 1;
-            foreach (AbstractCreation order in orders)
-            {
-                list += i.ToString() + ".\nAuthor: " + order.GetAuthor().ToString() + "\nTitle: " + order.GetTitle() +
-                    "\nGenre: " + order.GetType() + "\n";
-                i++;
-            }
-            list += "\nContracts:\n";
-            i = 1;
-            foreach (Contract contract in contracts)
-            {
-                list += i.ToString() + ".\nId: " + contract.GetContractId() + "\nContract type: " + contract.ContractTypeToString() + "\nAuthor: " + contract.GetAuthor().ToString() + "\n";
-                i++;
-            }
-            return list;
-        }
-
-        public void Buy()
+        public void Buy() 
         {
             warehouse.ShowStock();
             Console.Write("Choose book or magazine:");
             Console.ReadLine();
-
         }
-
-        public int AddBook(AbstractCreation book)
+        public int AddBook(AbstractCreation book) //dodawanie książki do listy
         {
             if(book is Book && !(books.Exists(i => i.Equals(book))))
             {
@@ -204,8 +146,7 @@ namespace EpressPublishingHouse
             else
                 return 0;
         }
-
-        public int AddMagazine(AbstractCreation magazine)
+        public int AddMagazine(AbstractCreation magazine) //dodawanie czasopisma do listy
         {
             if (magazine is Magazine && !(books.Exists(i => i.Equals(magazine))))
             {
@@ -215,8 +156,7 @@ namespace EpressPublishingHouse
             else
                 return 0;
         }
-
-        public void FinishOrder()
+        public void FinishOrder() //zakończ zamówienie na utwór
         {
             if (!GetOrders().Equals(""))
             {
@@ -236,8 +176,7 @@ namespace EpressPublishingHouse
             }
 
         }
-
-        public string GetReadyToPrint()
+        public string GetReadyToPrint() //przygotuj utwór do wydruku
         {
             string orderlist = "";
             int i = 1;
@@ -249,8 +188,7 @@ namespace EpressPublishingHouse
             }
             return orderlist;
         }
-
-        public void NewPrintOrder()
+        public void NewPrintOrder() //zlecanie wydruku jakiejś pozycji
         {
             if (!GetReadyToPrint().Equals(""))
             {
@@ -270,28 +208,9 @@ namespace EpressPublishingHouse
                 Console.WriteLine("Press any key to continue...");
                 Console.ReadKey();
                 Console.Clear();
-            }
- 
-            
+            } 
         }
-
-        public string GetPrintOrders()
-        {
-            string orderlist = "";
-            int i = 1;
-            int j = 1;
-            foreach (PrintingHouse printingHouse in printingHouseList)
-            {
-                foreach(PrintOrder printorder in printingHouse.GetPrintOrders())
-                {
-                    orderlist += "Printing house no " + j.ToString() + ".\n" + i.ToString() + ".\n PrintOrder: " + printorder.toString() + "\n";
-                }
-                j++;
-            }
-            return orderlist;
-        }
-
-        public void FinishPrinting(PublishingHouse epress)
+        public void FinishPrinting(PublishingHouse epress) //kończenie zlecenia wydruku
         {
             Console.WriteLine(GetPrintOrders());
             Console.WriteLine("Choose number of printing house: ");
@@ -301,13 +220,8 @@ namespace EpressPublishingHouse
             PrintOrder pr = printingHouseList[j - 1].GetPrintOrders().Find(o => o.GetId().Equals(i));
             printingHouseList[j - 1].EndOrder((uint)i, epress);
         }
-
-        public void ShowStock()
-        {
-            warehouse.ShowStock();
-        }
-
-        public void Print(PrintOrder order)
+        public void ShowStock() { warehouse.ShowStock(); } 
+        public void Print(PrintOrder order) //wyszukiwanie odpowiedniej drukarni i przekazywanie jej zlecenia
         {
             if (order.GetPrintOrderType() == "Al")
             {
@@ -327,10 +241,65 @@ namespace EpressPublishingHouse
                     }
                 (printingHouseList.ElementAt(indeks)).AddNewPrintOrder(order);
             }
-
         }
-
+        public string GetOrders()
+        {
+            string orderlist = "";
+            int i = 1;
+            foreach (AbstractCreation order in orders)
+            {
+                orderlist += i.ToString() + ".\nAuthor:\n" + order.GetAuthor().ToString() + "\nTitle: " + order.GetTitle() +
+                    "\nGenre: " + order.GetType() + "\n";
+                i++;
+            }
+            return orderlist;
+        }
+        public string GetAuthors()
+        {
+            string authorlist = "";
+            uint i = 1;
+            foreach (Author author in authors)
+            {
+                authorlist += i.ToString() + ".\n  Name: " + author.GetName() + "\n  Surname: " + author.GetSurname() + "\n  Id: " + author.GetId() + "\n";
+                i++;
+            }
+            return authorlist;
+        }
+        public string GetContractsAndOrders()
+        {
+            string list = "Orders:\n";
+            int i = 1;
+            foreach (AbstractCreation order in orders)
+            {
+                list += i.ToString() + ".\nAuthor: " + order.GetAuthor().ToString() + "\nTitle: " + order.GetTitle() +
+                    "\nGenre: " + order.GetType() + "\n";
+                i++;
+            }
+            list += "\nContracts:\n";
+            i = 1;
+            foreach (Contract contract in contracts)
+            {
+                list += i.ToString() + ".\nId: " + contract.GetContractId() + "\nContract type: " + contract.ContractTypeToString() + "\nAuthor: " + contract.GetAuthor().ToString() + "\n";
+                i++;
+            }
+            return list;
+        }
+        public string GetPrintOrders()
+        {
+            string orderlist = "";
+            int i = 1;
+            int j = 1;
+            foreach (PrintingHouse printingHouse in printingHouseList)
+            {
+                foreach (PrintOrder printorder in printingHouse.GetPrintOrders())
+                {
+                    orderlist += "Printing house no " + j.ToString() + ".\n" + i.ToString() + ".\n PrintOrder: " + printorder.toString() + "\n";
+                }
+                j++;
+            }
+            return orderlist;
+        }
         public Warehouse GetWarehouse() { return warehouse; }
-
+        public Author GetAuthorByIndex(int i) { return authors[i]; } //metoda zwracająca autora na podstawie indeksu
     }
 }

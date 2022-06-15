@@ -6,7 +6,6 @@ namespace EpressPublishingHouse
 	{
 		private List<PrintOrder> printOrders; //lista zleceń drruku
 		private bool ableToPrintAlbums; //czy drukarnia jest w stanie drukować albumy
-
         public PrintingHouse() //konstruktor bezparametrowy
         {
             printOrders = new List<PrintOrder>();
@@ -39,8 +38,6 @@ namespace EpressPublishingHouse
             pr.Finish(Epress); //podejmowane są odpowiednie kroki kończące zlecenie
             printOrders.Remove(pr); //zlecenie jest usuwane z listy
         }
-        public List<PrintOrder> GetPrintOrders() { return printOrders; }
-        public bool GetAbleToPrintAlbums() { return ableToPrintAlbums; }
         public uint HowBusy() //sprawdzanie "zajętości" drukarni. Ważne przy jej wyborze
         {
             uint points = 0; //Im większa liczba punktów, tym bardziej zajęta drukarnia
@@ -52,5 +49,7 @@ namespace EpressPublishingHouse
             }
             return points;
         }
+        public List<PrintOrder> GetPrintOrders() { return printOrders; }
+        public bool GetAbleToPrintAlbums() { return ableToPrintAlbums; }
     }
 }

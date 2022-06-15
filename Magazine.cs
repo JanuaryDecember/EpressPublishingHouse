@@ -4,38 +4,24 @@ namespace EpressPublishingHouse
 {
     public class Magazine : AbstractCreation
     {
-        private readonly string ReleaseNumber;
-        private readonly string Kind;
-
-        public Magazine() : base()
+        private readonly string ReleaseNumber; //data wydania czasopisma
+        private readonly string Kind; //rodzaj czasopisma (np. miesięcznik, tygodnik) 
+        public Magazine() : base() //konstruktor bezparametrowy
         {
-            ReleaseNumber = "Null";
+            ReleaseNumber = "00/00/0000";
             Kind = "Null";
         }
-
-        public Magazine(Author author, string Title, float Price, string ReleaseNumber, string Kind) : base(author, Title, Price)
+        public Magazine(Author author, string Title, float Price, string ReleaseNumber, string Kind) : base(author, Title, Price) //konstruktor
         {
             this.ReleaseNumber = ReleaseNumber;
             this.Kind = Kind;
         }
-
-        public Magazine(Magazine magazine) : base(new Author(magazine.author), magazine.Title, magazine.Price)
+        public Magazine(Magazine magazine) : base(new Author(magazine.author), magazine.Title, magazine.Price) //konstruktor kopiujący
         {
             this.ReleaseNumber = magazine.ReleaseNumber;
             this.Kind = magazine.Kind;
         }
-
-        public string GetReleaseNumber()
-        {
-            return ReleaseNumber;
-        }
-
-        public string GetKind()
-        {
-            return Kind;
-        }
-
-        public override bool Equals(object? obj)
+        public override bool Equals(object? obj) //metoda sprawdzająca, czy dwa czasopisma są tożsame
         {
             if (obj != null)
             {
@@ -55,9 +41,7 @@ namespace EpressPublishingHouse
             }
             else return false;
         }
-
-
-        public override string ToString()
+        public override string ToString() //przedstawia dane czasopisma w postaci tekstowej
         {
             return "Author:\n" + author.ToString() + "\n" 
                 + "Title: " + Title + "\n" 
@@ -66,5 +50,7 @@ namespace EpressPublishingHouse
                 + "Price: " + Price + "\n" 
                 + "Quantity: " + Quantity;
         }
+        public string GetReleaseNumber() { return ReleaseNumber; }
+        public string GetKind() { return Kind; }
     }
 }

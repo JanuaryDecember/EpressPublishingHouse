@@ -21,14 +21,10 @@ namespace EpressPublishingHouse
             this.id = ++lastId;
             this.creation = creation;
             this.amount = amount;
-            if (creation is Book && ((Book)creation).GetGenre().ToLower().Equals("album")) printOrderType = "Al";    //typ dla albumu
-            if (creation is Book) printOrderType = "Bk";    //typ dla książki
-            else if (creation is Magazine) printOrderType = "Mg";     //typ dla czasopisma
+            if (creation is Book && ((Book)creation).GetGenre().ToLower().Equals("album")) printOrderType = "Al"; //typ dla albumu
+            if (creation is Book) printOrderType = "Bk"; //typ dla książki
+            else if (creation is Magazine) printOrderType = "Mg"; //typ dla czasopisma
         }
-        public uint GetId() { return id; }
-        public string GetPrintOrderType() { return printOrderType; }
-        public AbstractCreation GetCreation() { return creation; }
-        public uint GetAmount() { return amount; }
         public void Finish(PublishingHouse Epress) //zlecenie zakończone
         {
             creation.MenageQuantity(amount,true); //zwiększenie ilości utworu o ilość wydrukowanych
@@ -43,5 +39,9 @@ namespace EpressPublishingHouse
         {
             return (id.ToString() + " - " + printOrderType.ToString() + " - " + creation.GetTitle() + " - " + amount.ToString());
         }
+        public uint GetAmount() { return amount; }
+        public AbstractCreation GetCreation() { return creation; }
+        public string GetPrintOrderType() { return printOrderType; }
+        public uint GetId() { return id; }
     }
 }
