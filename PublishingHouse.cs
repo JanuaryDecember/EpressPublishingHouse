@@ -48,10 +48,21 @@ namespace EpressPublishingHouse
             {
                 Console.WriteLine("Choose which author you want to delete:");
                 Console.WriteLine(GetAuthors());
-                authors.RemoveAt(Int32.Parse(Console.ReadLine()) - 1);
+                int iter = Int32.Parse(Console.ReadLine()) - 1;
+                EndCotracts(iter);
+                authors.RemoveAt(iter);
                 
             }
         }
+
+        public void FinishAllContracts()
+        {
+            Console.WriteLine("Choose author: ");
+            Console.WriteLine(GetAuthors());
+            int i = int.Parse(Console.ReadLine())-1;
+            EndCotracts(i);
+        }
+
         public void AddContract() //dodawanie umowy do listy
         {
             if (GetAuthors().Equals(""))
@@ -174,6 +185,14 @@ namespace EpressPublishingHouse
                 Console.ReadKey();
             }
 
+        }
+
+        public void EndCotracts(int iter)
+        {
+            foreach(Contract contract in contracts.FindAll(c => c.GetAuthor().Equals(authors[iter])))
+            {
+                contracts.Remove(contract);
+            }
         }
         public int AddBook(AbstractCreation book) //dodawanie książki do listy
         {

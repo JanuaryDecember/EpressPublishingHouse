@@ -7,13 +7,13 @@
             switch (c)
             {
                 case 0:
-                    Console.WriteLine("1.Authors management \n2. Contracts management \n3. Printing Managemant\n4. Shop\n5.Exit");
+                    Console.WriteLine("1.Authors management \n2.Contracts management \n3.Printing Managemant\n4.Shop\n5.Exit");
                     break;
                 case 1:
                     Console.WriteLine("1.Add a author \n2.Remove a author\n3.Show authors \n4.Go back");
                     break;
                 case 2:
-                    Console.WriteLine("1.New contract \n2.New order\n3.Show contracts and orders \n4.Finish order\n5.Go back");
+                    Console.WriteLine("1.New contract \n2.New order\n3.Show contracts and orders \n4.Finish all contarcts with author\n5.Finish order\n6.Go back");
                     break;
                 case 3:
                     Console.WriteLine("1.New print order \n2.Show orders\n3.Finish order\n4.Go back");
@@ -83,10 +83,15 @@
                                 break;
                             case 4:
                                 Console.Clear();
-                                Epress.FinishOrder();
+                                Epress.FinishAllContracts();
                                 Console.Clear();
                                 break;
                             case 5:
+                                Console.Clear();
+                                Epress.FinishOrder();
+                                Console.Clear();
+                                break;
+                            case 6:
                                 Console.Clear();
                                 break;
                         }
